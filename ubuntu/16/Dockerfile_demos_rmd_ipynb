@@ -14,7 +14,9 @@ RUN apt-get install -y apt-utils &&\
 # ==============================================================
 RUN apt-get install -y zlib1g-dev &&\
     apt-get install -y libffi-dev &&\
-    apt-get install -y libssl-dev
+    apt-get install -y libssl-dev &&\
+    apt-get install -y pandoc     &&\
+    apt-get install -y jupyter
 
 # Install dev libs & tools (for R)
 # ==============================================================
@@ -86,9 +88,7 @@ RUN wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz &&\
     make -j 8 &&\
     make install &&\
     export PATH=/opt/python/py311/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
-    python3 -m pip install twine &&\
-    python3 -m pip install wheel &&\
-    python3 -m pip install numpy &&\
+    python3 -m pip install "pybind11[global]" wheel numpy jupyter pandas scipy matplotlib pypandoc geopandas plotly &&\
     cd .. &&\
     rm -rf Python-3.11.1*
 
