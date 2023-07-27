@@ -12,10 +12,11 @@ RUN apt-get install -y apt-utils &&\
 
 # Install dev libs (for Python)
 # ==============================================================
-RUN apt-get install -y zlib1g-dev     &&\
-    apt-get install -y libffi-dev     &&\
-    apt-get install -y libssl-dev     &&\
-    apt-get install -y pandoc         &&\
+RUN apt-get install -y zlib1g-dev &&\
+    apt-get install -y libffi-dev &&\
+    apt-get install -y libssl-dev &&\
+    apt-get install -y pandoc &&\
+    apt-get install -y libsuitesparse-dev &&\
     apt-get install -y libsqlite3-dev
 
 # Install dev libs & tools (for R)
@@ -93,7 +94,7 @@ RUN wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz &&\
     make -j 8 &&\
     make install &&\
     export PATH=/opt/python/py311/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
-    python3 -m pip install "pybind11[global]" wheel numpy jupyter pandas scipy matplotlib pypandoc geopandas plotly &&\
+    python3 -m pip install "pybind11[global]" wheel numpy jupyter pandas scipy matplotlib pypandoc geopandas plotly scikit-sparse &&\
     cd .. &&\
     rm -rf Python-3.11.1*
 
