@@ -15,8 +15,6 @@ RUN apt-get install -y apt-utils &&\
 RUN apt-get install -y zlib1g-dev &&\
     apt-get install -y libffi-dev &&\
     apt-get install -y libssl-dev &&\
-    apt-get install -y pandoc &&\
-    apt-get install -y libsuitesparse-dev &&\
     apt-get install -y libsqlite3-dev
 
 # Install dev libs & tools (for R)
@@ -27,10 +25,7 @@ RUN apt-get install -y gfortran &&\
     apt-get install -y libcairo2-dev &&\
     apt-get install -y libxt-dev &&\
     apt-get install -y liblzma-dev &&\
-    apt-get install -y texlive-latex-extra &&\
-    apt-get install -y texlive-fonts-extra &&\
     apt-get install -y libpcre++-dev &&\
-    apt-get install -y texlive-latex-extra &&\
     apt-get install -y libcurl4-openssl-dev
 
 # Install dev libs & tools (for swig)
@@ -47,7 +42,7 @@ RUN apt-get install -y apt-transport-https ca-certificates gnupg software-proper
     apt-get update &&\
     apt-get install -y cmake
 
-# Install recent openssl (for py310 & py311) (from source)
+# Install recent openssl (for py311) (from source)
 # ==============================================================
 RUN wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz &&\
     tar xvf openssl-1.1.1g.tar.gz &&\
@@ -81,7 +76,7 @@ RUN wget https://cran.r-project.org/src/base/R-4/R-4.3.0.tar.gz &&\
     cd .. &&\
     rm -rf R-4.3.0*
 
-RUN Rscript -e "install.packages (c('knitr', 'rmarkdown', 'ggplot2', 'ggpubr', 'Matrix', 'FNN'), repos='https://cloud.r-project.org/')"
+RUN Rscript -e "install.packages (c('knitr', 'rmarkdown'), repos='https://cloud.r-project.org/')"
 
 # Install last version of Python (from source) + packages
 # ==============================================================
@@ -94,7 +89,7 @@ RUN wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz &&\
     make -j 8 &&\
     make install &&\
     export PATH=/opt/python/py311/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
-    python3 -m pip install "pybind11[global]" wheel numpy jupyter pandas scipy matplotlib pypandoc geopandas plotly scikit-sparse &&\
+    python3 -m pip install "pybind11[global]" wheel numpy jupyter &&\
     cd .. &&\
     rm -rf Python-3.11.1*
 
