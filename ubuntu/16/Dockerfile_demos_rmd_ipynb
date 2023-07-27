@@ -21,8 +21,13 @@ RUN apt-get install -y zlib1g-dev     &&\
 # Install dev libs & tools (for R)
 # ==============================================================
 RUN apt-get install -y gfortran &&\
+    apt-get install -y libtiff5-dev &&\
     apt-get install -y libbz2-dev &&\
+    apt-get install -y libcairo2-dev &&\
+    apt-get install -y libxt-dev &&\
     apt-get install -y liblzma-dev &&\
+    apt-get install -y texlive-latex-extra &&\
+    apt-get install -y texlive-fonts-extra &&\
     apt-get install -y libpcre++-dev &&\
     apt-get install -y texlive-latex-extra &&\
     apt-get install -y libcurl4-openssl-dev
