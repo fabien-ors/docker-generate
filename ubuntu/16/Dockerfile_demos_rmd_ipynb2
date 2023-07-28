@@ -48,11 +48,10 @@ RUN wget https://cran.r-project.org/src/base/R-4/R-4.3.0.tar.gz &&\
     ./configure --with-readline=no -with-x=no --with-pcre1 --enable-R-shlib &&\
     make &&\
     make install &&\
+    Rscript -e "install.packages (c('knitr', 'rmarkdown'), repos='https://cloud.r-project.org/')" &&\
+    Rscript -e "install.packages ('swigex', repos='https://soft.mines-paristech.fr/cran')" &&\
     cd .. &&\
     rm -rf R-4.3.0*
-
-RUN Rscript -e "install.packages (c('knitr', 'rmarkdown'), repos='https://cloud.r-project.org/')"
-RUN Rscript -e "install.packages ('swigex', repos='https://soft.mines-paristech.fr/cran')"
 
 # Install last version of Python (from source) + packages
 # ==============================================================
@@ -65,9 +64,7 @@ RUN wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz &&\
     make -j 8 &&\
     make install &&\
     export PATH=/opt/python/py311/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
+    python3 -m pip install numpy jupyter &&\
     cd .. &&\
     rm -rf Python-3.11.1*
-
-RUN python3 -m pip install numpy jupyter
-
 
