@@ -50,6 +50,10 @@ RUN wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz &&\
     cd .. &&\
     rm -rf openssl-1.1.1g*
 
+# Install dev libs & tools (for gstlearn)
+# ==============================================================
+RUN apt-get install -y doxygen
+
 # Install swig [customized] (from source)
 # ==============================================================
 # TODO : Use a tagged realease (not the master branch)
