@@ -58,7 +58,7 @@ RUN wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz &&\
     cd .. &&\
     rm -rf openssl-1.1.1g*
 
-# Install dev libs & tools (for gstlearn)
+# Install dev libs & tools (for swigex0)
 # ==============================================================
 RUN apt-get install -y doxygen
 
