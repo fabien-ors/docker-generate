@@ -202,6 +202,7 @@ RUN wget https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz &&\
     python3 -m pip install twine &&\
     python3 -m pip install wheel &&\
     python3 -m pip install numpy &&\
+    python3 -m pip install setuptools &&\
     cd .. &&\
     rm -rf Python-3.12.1*
 
