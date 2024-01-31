@@ -190,6 +190,22 @@ RUN wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz &&\
     cd .. &&\
     rm -rf Python-3.11.1*
 
+# Use recent openssl
+# https://github.com/urllib3/urllib3/issues/2168
+RUN wget https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz &&\
+    tar xvf Python-3.12.1.tgz &&\
+    cd Python-3.12.1 &&\
+    ./configure --prefix=/opt/python/py312/ --with-openssl=/usr/openssl --with-openssl-rpath=/usr/openssl/lib&&\
+    make -j 8 &&\
+    make install &&\
+    export PATH=/opt/python/py312/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
+    python3 -m pip install twine &&\
+    python3 -m pip install wheel &&\
+    python3 -m pip install numpy &&\
+    cd .. &&\
+    rm -rf Python-3.12.1*
+
+
 
 
 
