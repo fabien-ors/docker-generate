@@ -8,7 +8,8 @@ RUN apt-get install -y apt-utils &&\
     apt-get install -y wget &&\
     apt-get install -y make &&\
     apt-get install -y g++ &&\
-    apt-get install -y git
+    apt-get install -y git &&\
+    apt-get install -y unzip
 
 # Install dev libs (for Python)
 # ==============================================================
@@ -42,7 +43,7 @@ RUN apt-get install -y bison &&\
 # ==============================================================
 # https://gist.github.com/sergio-gimenez/b17b3ff894366627dbf3cb9682d0c3d2
 RUN apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common &&\
-    wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | apt-key add - &&\
+    wget - https://apt.kitware.com/keys/kitware-archive-latest.asc | apt-key add - &&\
     apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main' &&\
     apt-get update &&\
     apt-get install -y cmake
@@ -64,7 +65,7 @@ RUN apt-get install -y doxygen
 
 # Install swig [customized] (from source)
 # ==============================================================
-# TODO : Use a tagged realease (not the master branch)
+# TODO : Use a tagged release (not the master branch)
 RUN git clone https://github.com/fabien-ors/swig &&\
     cd swig &&\
     cmake -Bbuild &&\
