@@ -39,11 +39,17 @@ RUN apt-get install -y gfortran &&\
 RUN apt-get install -y bison &&\
     apt-get install -y libpcre2-dev
     
+
+# Install dev libs & tools (for swig)
+# ==============================================================
+RUN apt-get install -y bison &&\
+    apt-get install -y libpcre2-dev
+    
 # Install recent cmake (from source)
 # ==============================================================
 # https://gist.github.com/sergio-gimenez/b17b3ff894366627dbf3cb9682d0c3d2
 RUN apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common &&\
-    wget - https://apt.kitware.com/keys/kitware-archive-latest.asc | apt-key add - &&\
+    wget -qO - https://apt.kitware.com/keys/kitware-archive-latest.asc | apt-key add - &&\
     apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main' &&\
     apt-get update &&\
     apt-get install -y cmake
@@ -59,75 +65,24 @@ RUN wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz &&\
     cd .. &&\
     rm -rf openssl-1.1.1g*
 
-# Install dev libs & tools (for gstlearn)
+# Install dev libs & tools (for swigex)
 # ==============================================================
 RUN apt-get install -y doxygen
 
-# Install swig [customized] (from source)
-# ==============================================================
-# TODO : Use a tagged release (not the master branch)
-RUN git clone https://github.com/fabien-ors/swig &&\
-    cd swig &&\
-    cmake -Bbuild &&\
-    cd build &&\
-    make &&\
-    make install &&\
-    cd ../.. &&\
-    rm -rf swig
-
 # Install last version of R (from source)
 # ==============================================================
-RUN wget https://cran.r-project.org/src/base/R-4/R-4.3.0.tar.gz &&\
-    tar -xvf R-4.3.0.tar.gz &&\
-    cd R-4.3.0 &&\
+RUN wget https://cran.r-project.org/src/base/R-4/R-4.3.2.tar.gz &&\
+    tar -xvf R-4.3.2.tar.gz &&\
+    cd R-4.3.2 &&\
     ./configure --with-readline=no -with-x=no --with-pcre1 --enable-R-shlib &&\
     make &&\
     make install &&\
     Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
     cd .. &&\
-    rm -rf R-4.3.0*
+    rm -rf R-4.3.2*
 
 # Install several version of Python (from source)
 # ==============================================================
-#RUN wget https://www.python.org/ftp/python/3.5.10/Python-3.5.10.tgz &&\
-#    tar xvf Python-3.5.10.tgz &&\
-#    cd Python-3.5.10 &&\
-#    ./configure --prefix=/opt/python/py35/ &&\
-#    make -j 8 &&\
-#    make install &&\
-#    export PATH=/opt/python/py35/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
-#    python3 -m pip install twine &&\
-#    python3 -m pip install wheel &&\
-#    python3 -m pip install numpy &&\
-#    cd .. &&\
-#    rm -rf Python-3.5.10*
-
-#RUN wget https://www.python.org/ftp/python/3.6.15/Python-3.6.15.tgz &&\
-#    tar xvf Python-3.6.15.tgz &&\
-#    cd Python-3.6.15 &&\
-#    ./configure --prefix=/opt/python/py36/ &&\
-#    make -j 8 &&\
-#    make install &&\
-#    export PATH=/opt/python/py36/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
-#    python3 -m pip install --upgrade pip &&\
-#    python3 -m pip install twine &&\
-#    python3 -m pip install wheel &&\
-#    python3 -m pip install numpy &&\
-#    cd .. &&\
-#    rm -rf Python-3.6.15*
-
-#RUN wget https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz &&\
-#    tar xvf Python-3.7.12.tgz &&\
-#    cd Python-3.7.12  &&\
-#    ./configure --prefix=/opt/python/py37/ &&\
-#    make -j 8 &&\
-#    make install &&\
-#    export PATH=/opt/python/py37/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
-#    python3 -m pip install twine &&\
-#    python3 -m pip install wheel &&\
-#    python3 -m pip install numpy &&\
-#    cd .. &&\
-#    rm -rf Python-3.7.12*
 
 # Downgrade urllib3 due to old libssl
 # https://levelup.gitconnected.com/fixing-importerror-urllib3-v2-0-5fbfe8576957
@@ -191,6 +146,31 @@ RUN wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz &&\
     cd .. &&\
     rm -rf Python-3.11.1*
 
+# Use recent openssl
+# https://github.com/urllib3/urllib3/issues/2168
+RUN wget https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz &&\
+    tar xvf Python-3.12.1.tgz &&\
+    cd Python-3.12.1 &&\
+    ./configure --prefix=/opt/python/py312/ --with-openssl=/usr/openssl --with-openssl-rpath=/usr/openssl/lib&&\
+    make -j 8 &&\
+    make install &&\
+    export PATH=/opt/python/py312/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
+    python3 -m pip install twine &&\
+    python3 -m pip install wheel &&\
+    python3 -m pip install numpy &&\
+    python3 -m pip install setuptools &&\
+    cd .. &&\
+    rm -rf Python-3.12.1*
 
-
-
+# Install swig [customized] (from source)
+# ==============================================================
+# TODO : Use a tagged realease (not the master branch)
+RUN git clone https://github.com/fabien-ors/swig &&\
+    cd swig &&\
+    cmake -Bbuild &&\
+    cd build &&\
+    make &&\
+    make install &&\
+    cd ../.. &&\
+    rm -rf swig
+    
