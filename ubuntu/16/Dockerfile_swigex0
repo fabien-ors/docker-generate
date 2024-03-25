@@ -24,6 +24,7 @@ RUN apt-get install -y gfortran &&\
     apt-get install -y liblzma-dev &&\
     apt-get install -y libpcre++-dev &&\
     apt-get install -y texlive-latex-extra &&\
+    apt-get install -y texlive-fonts-extra &&\
     apt-get install -y libfontconfig1-dev &&\
     apt-get install -y libxml2-dev &&\
     apt-get install -y libharfbuzz-dev &&\
@@ -152,6 +153,7 @@ RUN wget https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz &&\
     python3 -m pip install twine &&\
     python3 -m pip install wheel &&\
     python3 -m pip install numpy &&\
+    python3 -m pip install "pybind11[global]" &&\
     python3 -m pip install setuptools &&\
     cd .. &&\
     rm -rf Python-3.12.1*
