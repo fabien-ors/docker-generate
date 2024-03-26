@@ -13,10 +13,13 @@ RUN apt-get install -y tzdata &&\
     apt-get install -y libcairo2-dev &&\
     apt-get install -y libxt-dev
 
-# Install last version of Python packages
+# Install Python packages for demos generation
 # ==============================================================
 RUN export PATH=/opt/python/py311/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
-    python3 -m pip install jupyter pypandoc &&\
+    jupyter --version &&\
+    python3 -m pip install jupyter==6.1.6 &&\
+    python3 -m pip install pypandoc &&\
+    jupyter --version &&\
     cd .. &&\
     rm -rf Python-3.11.1*
 
