@@ -19,7 +19,4 @@ RUN export PATH=/opt/python/py311/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/
     jupyter --version &&\
     python3 -m pip install notebook==6.1.6 &&\
     python3 -m pip install pypandoc &&\
-    jupyter --version &&\
-    cd .. &&\
-    rm -rf Python-3.11.1*
-
+    jupyter --version
