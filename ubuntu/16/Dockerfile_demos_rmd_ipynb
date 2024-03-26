@@ -17,7 +17,7 @@ RUN apt-get install -y tzdata &&\
 # ==============================================================
 RUN export PATH=/opt/python/py311/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
     jupyter --version &&\
-    python3 -m pip install jupyter==6.1.6 &&\
+    python3 -m pip install notebook==6.1.6 &&\
     python3 -m pip install pypandoc &&\
     jupyter --version &&\
     cd .. &&\
