@@ -1,4 +1,4 @@
-FROM fabienors/ubuntu-16-demos-rmd-ipynb
+FROM fabienors/ubuntu-16-swigex0
 
 RUN apt-get update
 
