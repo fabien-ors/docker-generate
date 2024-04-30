@@ -8,7 +8,7 @@ RUN apt-get install -y apt-utils &&\
     apt-get install -y wget &&\
     apt-get install -y make &&\
     apt-get install -y g++ &&\
-    apt-get install -y git &&\
+    apt-get install -y gettext &&\
     apt-get install -y unzip
 
 # Install dev libs (for Python)
@@ -60,6 +60,19 @@ RUN wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz &&\
     cd .. &&\
     rm -rf openssl-1.1.1g*
 
+# Install recent git (from source)
+# ==============================================================
+RUN wget https://github.com/git/git/archive/refs/tags/v2.34.1.tar.gz &&\
+    tar -zxf v2.34.1.tar.gz &&\
+    cd git-2.34.1 &&\
+    sudo apt-get install libz-dev &&\
+    sudo apt-get install libexpat1-dev &&\
+    make prefix=/usr/local all &&\
+    sudo make prefix=/usr/local install &&\
+    git --version
+
+# Output:
+# git version 2.31.1
 # Install dev libs & tools (for swigex)
 # ==============================================================
 RUN apt-get install -y doxygen
