@@ -15,6 +15,7 @@ RUN apt-get install -y apt-utils &&\
 # ==============================================================
 RUN apt-get install -y zlib1g-dev &&\
     apt-get install -y libffi-dev &&\
+    apt-get install -y libsqlite3-dev &&\
     apt-get install -y libssl-dev
 
 # Install dev libs & tools (for R)
@@ -65,8 +66,8 @@ RUN wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz &&\
 RUN wget https://github.com/git/git/archive/refs/tags/v2.34.1.tar.gz &&\
     tar -zxf v2.34.1.tar.gz &&\
     cd git-2.34.1 &&\
-    apt-get install libz-dev &&\
-    apt-get install libexpat1-dev &&\
+    apt-get install -y libz-dev &&\
+    apt-get install -y libexpat1-dev &&\
     make prefix=/usr/local all &&\
     make prefix=/usr/local install &&\
     git --version
