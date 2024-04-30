@@ -2,6 +2,10 @@ FROM fabienors/ubuntu-16-swigex0
 
 RUN apt-get update
 
+# Show it version
+# ==============================================================
+RUN git --version
+
 # Install dev libs (for Python)
 # ==============================================================
 RUN apt-get install -y pandoc &&\
