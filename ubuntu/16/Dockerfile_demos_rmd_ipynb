@@ -2,7 +2,7 @@ FROM fabienors/ubuntu-16-swigex0
 
 RUN apt-get update
 
-# Show it version
+# Show git version
 # ==============================================================
 RUN git --version
 
