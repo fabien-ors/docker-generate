@@ -81,7 +81,7 @@ RUN apt-get install -y doxygen
 RUN wget https://cran.r-project.org/src/base/R-4/R-4.3.2.tar.gz &&\
     tar -xvf R-4.3.2.tar.gz &&\
     cd R-4.3.2 &&\
-    ./configure --with-readline=no -with-x=no --with-pcre1 --enable-R-shlib &&\
+    ./configure --with-readline=no --without-x --with-cairo --with-pcre1 --enable-R-shlib &&\
     make &&\
     make install &&\
     Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
