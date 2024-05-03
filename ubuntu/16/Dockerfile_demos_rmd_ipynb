@@ -6,17 +6,6 @@ RUN apt-get update
 # ==============================================================
 RUN git --version
 
-# Install dev libs (for Python)
-# ==============================================================
-RUN apt-get install -y pandoc &&\
-    apt-get install -y libsqlite3-dev
-
-# Install dev libs & tools (for R)
-# ==============================================================
-RUN apt-get install -y tzdata &&\
-    apt-get install -y libcairo2-dev &&\
-    apt-get install -y libxt-dev
-
 # Install Python packages for demos generation
 # ==============================================================
 RUN export PATH=/opt/python/py311/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
