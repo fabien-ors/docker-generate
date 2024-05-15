@@ -82,9 +82,9 @@ RUN apt-get install -y doxygen
 
 # Install last version of R (from source)
 # ==============================================================
-RUN wget https://cran.r-project.org/src/base/R-4/R-4.4.0.tar.gz &&\
-    tar -xvf R-4.4.0.tar.gz &&\
-    cd R-4.4.0 &&\
+RUN wget https://cran.r-project.org/src/base/R-4/R-4.3.3.tar.gz &&\
+    tar -xvf R-4.3.3.tar.gz &&\
+    cd R-4.3.3 &&\
     export CXXSTD=-std=gnu++14 &&\
     ./configure --with-readline=no --without-x --with-cairo --with-pcre1 --enable-R-shlib &&\
     make &&\
@@ -92,7 +92,7 @@ RUN wget https://cran.r-project.org/src/base/R-4/R-4.4.0.tar.gz &&\
     Rscript -e "install.packages (c('knitr', 'rmarkdown'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
     Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
     cd .. &&\
-    rm -rf R-4.4.0*
+    rm -rf R-4.3.3*
 
 # Install several version of Python (from source)
 # ==============================================================
