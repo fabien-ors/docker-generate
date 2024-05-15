@@ -85,9 +85,10 @@ RUN apt-get install -y doxygen
 RUN wget https://cran.r-project.org/src/base/R-4/R-4.4.0.tar.gz &&\
     tar -xvf R-4.4.0.tar.gz &&\
     cd R-4.4.0 &&\
-    ./configure --with-readline=no --without-x --with-cairo --with-pcre1 --enable-R-shlib &&\
+    ./configure -std=gnu++14 --with-readline=no --without-x --with-cairo --with-pcre1 --enable-R-shlib &&\
     make &&\
     make install &&\
+    Rscript -e "install.packages (c('knitr', 'rmarkdown'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
     Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
     cd .. &&\
     rm -rf R-4.4.0*
