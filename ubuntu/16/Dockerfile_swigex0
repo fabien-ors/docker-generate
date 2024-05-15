@@ -82,24 +82,24 @@ RUN apt-get install -y doxygen
 
 # Install last version of R (from source)
 # ==============================================================
-RUN wget https://cran.r-project.org/src/base/R-4/R-4.3.2.tar.gz &&\
-    tar -xvf R-4.3.2.tar.gz &&\
-    cd R-4.3.2 &&\
+RUN wget https://cran.r-project.org/src/base/R-4/R-4.4.0.tar.gz &&\
+    tar -xvf R-4.4.0.tar.gz &&\
+    cd R-4.4.0 &&\
     ./configure --with-readline=no --without-x --with-cairo --with-pcre1 --enable-R-shlib &&\
     make &&\
     make install &&\
     Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
     cd .. &&\
-    rm -rf R-4.3.2*
+    rm -rf R-4.4.0*
 
 # Install several version of Python (from source)
 # ==============================================================
 
 # Downgrade urllib3 due to old libssl
 # https://levelup.gitconnected.com/fixing-importerror-urllib3-v2-0-5fbfe8576957
-RUN wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz &&\
-    tar xvf Python-3.8.12.tgz &&\
-    cd Python-3.8.12 &&\
+RUN wget https://www.python.org/ftp/python/3.8.19/Python-3.8.19.tgz &&\
+    tar xvf Python-3.8.19.tgz &&\
+    cd Python-3.8.19 &&\
     ./configure --prefix=/opt/python/py38/ &&\
     make -j 8 &&\
     make install &&\
@@ -109,13 +109,13 @@ RUN wget https://www.python.org/ftp/python/3.8.12/Python-3.8.12.tgz &&\
     python3 -m pip install wheel &&\
     python3 -m pip install numpy &&\
     cd .. &&\
-    rm -rf Python-3.8.12*
+    rm -rf Python-3.8.19*
 
 # Downgrade urllib3 due to old libssl
 # https://levelup.gitconnected.com/fixing-importerror-urllib3-v2-0-5fbfe8576957
-RUN wget https://www.python.org/ftp/python/3.9.10/Python-3.9.10.tgz &&\
-    tar xvf Python-3.9.10.tgz &&\
-    cd Python-3.9.10 &&\
+RUN wget https://www.python.org/ftp/python/3.9.19/Python-3.9.19.tgz &&\
+    tar xvf Python-3.9.19.tgz &&\
+    cd Python-3.9.19 &&\
     ./configure --prefix=/opt/python/py39/ &&\
     make -j 8 &&\
     make install &&\
@@ -125,13 +125,13 @@ RUN wget https://www.python.org/ftp/python/3.9.10/Python-3.9.10.tgz &&\
     python3 -m pip install wheel &&\
     python3 -m pip install numpy &&\
     cd .. &&\
-    rm -rf Python-3.9.10*
+    rm -rf Python-3.9.19*
 
 # Use recent openssl
 # https://github.com/urllib3/urllib3/issues/2168
-RUN wget https://www.python.org/ftp/python/3.10.2/Python-3.10.2.tgz &&\
-    tar xvf Python-3.10.2.tgz &&\
-    cd Python-3.10.2 &&\
+RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz &&\
+    tar xvf Python-3.10.14.tgz &&\
+    cd Python-3.10.14 &&\
     ./configure --prefix=/opt/python/py310/ --with-openssl=/usr/openssl --with-openssl-rpath=/usr/openssl/lib&&\
     make -j 8 &&\
     make install &&\
@@ -140,13 +140,13 @@ RUN wget https://www.python.org/ftp/python/3.10.2/Python-3.10.2.tgz &&\
     python3 -m pip install wheel &&\
     python3 -m pip install numpy &&\
     cd .. &&\
-    rm -rf Python-3.10.2*
+    rm -rf Python-3.10.14*
 
 # Use recent openssl
 # https://github.com/urllib3/urllib3/issues/2168
-RUN wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz &&\
-    tar xvf Python-3.11.1.tgz &&\
-    cd Python-3.11.1 &&\
+RUN wget https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz &&\
+    tar xvf Python-3.11.9.tgz &&\
+    cd Python-3.11.9 &&\
     ./configure --prefix=/opt/python/py311/ --with-openssl=/usr/openssl --with-openssl-rpath=/usr/openssl/lib&&\
     make -j 8 &&\
     make install &&\
@@ -155,13 +155,13 @@ RUN wget https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tgz &&\
     python3 -m pip install wheel &&\
     python3 -m pip install numpy &&\
     cd .. &&\
-    rm -rf Python-3.11.1*
+    rm -rf Python-3.11.9*
 
 # Use recent openssl
 # https://github.com/urllib3/urllib3/issues/2168
-RUN wget https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz &&\
-    tar xvf Python-3.12.1.tgz &&\
-    cd Python-3.12.1 &&\
+RUN wget https://www.python.org/ftp/python/3.12.3/Python-3.12.3.tgz &&\
+    tar xvf Python-3.12.3.tgz &&\
+    cd Python-3.12.3 &&\
     ./configure --prefix=/opt/python/py312/ --with-openssl=/usr/openssl --with-openssl-rpath=/usr/openssl/lib&&\
     make -j 8 &&\
     make install &&\
@@ -172,7 +172,7 @@ RUN wget https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz &&\
     python3 -m pip install "pybind11[global]" &&\
     python3 -m pip install setuptools &&\
     cd .. &&\
-    rm -rf Python-3.12.1*
+    rm -rf Python-3.12.3*
 
 # Install swig [customized] (from source)
 # ==============================================================
