@@ -107,7 +107,7 @@ RUN wget https://www.python.org/ftp/python/3.8.19/Python-3.8.19.tgz &&\
     export PATH=/opt/python/py38/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
     python3 -m pip install urllib3==1.26.6 &&\
     python3 -m pip install twine &&\
-    python3 -m pip install wheel &&\
+    python3 -m pip install build &&\
     python3 -m pip install numpy &&\
     cd .. &&\
     rm -rf Python-3.8.19*
@@ -123,7 +123,7 @@ RUN wget https://www.python.org/ftp/python/3.9.19/Python-3.9.19.tgz &&\
     export PATH=/opt/python/py39/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
     python3 -m pip install urllib3==1.26.6 &&\
     python3 -m pip install twine &&\
-    python3 -m pip install wheel &&\
+    python3 -m pip install build &&\
     python3 -m pip install numpy &&\
     cd .. &&\
     rm -rf Python-3.9.19*
@@ -138,7 +138,7 @@ RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz &&\
     make install &&\
     export PATH=/opt/python/py310/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
     python3 -m pip install twine &&\
-    python3 -m pip install wheel &&\
+    python3 -m pip install build &&\
     python3 -m pip install numpy &&\
     cd .. &&\
     rm -rf Python-3.10.14*
@@ -153,7 +153,7 @@ RUN wget https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz &&\
     make install &&\
     export PATH=/opt/python/py311/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
     python3 -m pip install twine &&\
-    python3 -m pip install wheel &&\
+    python3 -m pip install build &&\
     python3 -m pip install numpy &&\
     cd .. &&\
     rm -rf Python-3.11.9*
@@ -168,10 +168,8 @@ RUN wget https://www.python.org/ftp/python/3.12.4/Python-3.12.4.tgz &&\
     make install &&\
     export PATH=/opt/python/py312/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin &&\
     python3 -m pip install twine &&\
-    python3 -m pip install wheel &&\
+    python3 -m pip install build &&\
     python3 -m pip install numpy &&\
-    python3 -m pip install "pybind11[global]" &&\
-    python3 -m pip install setuptools &&\
     cd .. &&\
     rm -rf Python-3.12.4*
 
