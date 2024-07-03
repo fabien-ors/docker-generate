@@ -54,7 +54,7 @@ RUN apt-get install -y apt-transport-https ca-certificates gnupg software-proper
     apt-get update &&\
     apt-get install -y cmake
 
-# Install recent openssl (for py310 & py311) (from source)
+# Install recent openssl (for py310 & more) (from source)
 # ==============================================================
 RUN wget https://www.openssl.org/source/openssl-1.1.1g.tar.gz &&\
     tar xvf openssl-1.1.1g.tar.gz &&\
@@ -82,14 +82,14 @@ RUN apt-get install -y doxygen
 
 # Install last version of R (from source)
 # ==============================================================
-RUN wget https://cran.r-project.org/src/base/R-4/R-4.3.3.tar.gz &&\
-    tar -xvf R-4.3.3.tar.gz &&\
-    cd R-4.3.3 &&\
+RUN wget https://cran.r-project.org/src/base/R-4/R-4.4.1.tar.gz &&\
+    tar -xvf R-4.4.1.tar.gz &&\
+    cd R-4.4.1 &&\
     ./configure --with-readline=no --without-x --with-cairo --with-pcre1 --enable-R-shlib &&\
     make &&\
     make install &&\
     Rscript -e "install.packages (c('knitr', 'rmarkdown'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
-    Rscript -e "install.packages(c('devtools'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
+    Rscript -e "install.packages(c('roxygen2'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
     cd .. &&\
     rm -rf R-4.3.3*
 
@@ -160,9 +160,9 @@ RUN wget https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz &&\
 
 # Use recent openssl
 # https://github.com/urllib3/urllib3/issues/2168
-RUN wget https://www.python.org/ftp/python/3.12.3/Python-3.12.3.tgz &&\
-    tar xvf Python-3.12.3.tgz &&\
-    cd Python-3.12.3 &&\
+RUN wget https://www.python.org/ftp/python/3.12.4/Python-3.12.4.tgz &&\
+    tar xvf Python-3.12.4.tgz &&\
+    cd Python-3.12.4 &&\
     ./configure --prefix=/opt/python/py312/ --with-openssl=/usr/openssl --with-openssl-rpath=/usr/openssl/lib&&\
     make -j 8 &&\
     make install &&\
@@ -173,7 +173,7 @@ RUN wget https://www.python.org/ftp/python/3.12.3/Python-3.12.3.tgz &&\
     python3 -m pip install "pybind11[global]" &&\
     python3 -m pip install setuptools &&\
     cd .. &&\
-    rm -rf Python-3.12.3*
+    rm -rf Python-3.12.4*
 
 # Install swig [customized] (from source)
 # ==============================================================
