@@ -2,6 +2,8 @@ FROM almalinux:8
 
 #RUN dnf -y update
 
+RUN echo $SHELL
+
 RUN dnf -y install wget
 
 # Install compulsory tools
@@ -20,6 +22,8 @@ RUN wget https://pierre.guillou.net/data/swig.tar.gz &&\
     tar zxvf swig.tar.gz &&\
     CURDIR=$(pwd) &&\
     echo 'export PATH=$CURDIR/swig/bin:$PATH' >> ~/.bashrc 
+
+RUN cat ~/.bashrc
 
 RUN swig --version
 
