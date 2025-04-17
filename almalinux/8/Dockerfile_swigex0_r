@@ -1,18 +1,16 @@
 FROM almalinux:8
 
-#RUN dnf -y update
-
-RUN dnf -y install wget
+RUN dnf -y update
 
 # Install compulsory tools
 # ==============================================================
-#RUN dnf -y install epel-release &&\
-#    dnf -y install gcc-c++ &&\
-#    dnf -y install automake &&\
-#    dnf -y install kernel-devel &&\
-#    dnf -y install openssl-devel &&\
-#    dnf -y install wget &&\
-#    dnf -y install make
+RUN dnf -y install epel-release &&\
+    dnf -y install gcc-c++ &&\
+    dnf -y install automake &&\
+    dnf -y install kernel-devel &&\
+    dnf -y install openssl-devel &&\
+    dnf -y install wget &&\
+    dnf -y install make
 
 # Install non-official pre-build swig
 # ==============================================================
@@ -20,9 +18,6 @@ RUN wget https://pierre.guillou.net/data/swig.tar.gz &&\
     tar zxvf swig.tar.gz &&\
     ls swig-ors/bin &&\
     chmod +x swig-ors/bin/swig
-
-RUN export PATH=/swig-ors/bin:$PATH &&\
-    swig --version
 
 # Install 'recent' cmake (from source)
 # ==============================================================
@@ -54,4 +49,7 @@ RUN dnf -y install gfortran &&\
     dnf -y install tzdata &&\
     dnf -y install libcairo2-dev &&\
     dnf -y install libxt-dev
-    
+
+#RUN export PATH=/swig-ors/bin:$PATH &&\
+#    swig --version
+
