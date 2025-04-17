@@ -12,13 +12,6 @@ RUN dnf -y install epel-release &&\
     dnf -y install wget &&\
     dnf -y install make
 
-# Install non-official pre-build swig
-# ==============================================================
-RUN wget https://pierre.guillou.net/data/swig.tar.gz &&\
-    tar zxvf swig.tar.gz &&\
-    ls swig-ors/bin &&\
-    chmod +x swig-ors/bin/swig
-
 # Install 'recent' cmake (from source)
 # ==============================================================
 # https://orcacore.com/install-use-cmake-almalinux-8
@@ -28,6 +21,25 @@ RUN wget https://cmake.org/files/v3.20/cmake-3.20.6.tar.gz &&\
     ./bootstrap &&\
     gmake &&\
     make install
+
+# Install recent git (from source)
+# ==============================================================
+RUN wget https://github.com/git/git/archive/refs/tags/v2.34.1.tar.gz &&\
+    tar -zxf v2.34.1.tar.gz &&\
+    cd git-2.34.1 &&\
+    dnf -y install libz-dev &&\
+    dnf -y install libexpat1-dev &&\
+    make prefix=/usr/local all &&\
+    make prefix=/usr/local install &&\
+    git --version
+
+# Install non-official pre-build swig
+# ==============================================================
+RUN wget https://pierre.guillou.net/data/swig.tar.gz &&\
+    tar zxvf swig.tar.gz &&\
+    ls swig-ors/bin &&\
+    chmod +x swig-ors/bin/swig
+
 
 # Install dev libs & tools (for R)
 # ==============================================================
