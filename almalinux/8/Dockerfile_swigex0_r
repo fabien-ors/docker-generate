@@ -19,10 +19,10 @@ RUN dnf -y install wget
 RUN wget https://pierre.guillou.net/data/swig.tar.gz &&\
     tar zxvf swig.tar.gz &&\
     ls swig-ors/bin &&\
-    chmod +x swig-ors/bin/swig &&\
-    export PATH=/swig-ors/bin:$PATH
+    chmod +x swig-ors/bin/swig
 
-RUN swig --version
+RUN export PATH=/swig-ors/bin:$PATH &&\
+    swig --version
 
 # Install 'recent' cmake (from source)
 # ==============================================================
