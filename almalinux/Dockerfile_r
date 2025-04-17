@@ -1,0 +1,52 @@
+FROM almalinux:8
+
+RUN dnf -y update
+
+# Install compulsory tools
+# ==============================================================
+RUN dnf -y install epel-release &&\
+    dnf -y install gcc-c++ &&\
+    dnf -y install automake &&\
+    dnf -y install kernel-devel &&\
+    dnf -y install openssl-devel &&\
+    dnf -y install make
+
+# Install non-official pre-build swig
+# ==============================================================
+RUN wget https://pierre.guillou.net/data/swig.tar.gz &&\
+    tar zxvf swig.tar.gz &&\
+    CURDIR=$(pwd) &&\
+    echo 'export PATH=$CURDIR/swig/bin:$PATH' >> ~/.bashrc 
+
+# Install dev libs & tools (for R)
+# ==============================================================
+RUN dnf -y install gfortran &&\
+    dnf -y install libbz2-dev &&\
+    dnf -y install liblzma-dev &&\
+    dnf -y install libpcre++-dev &&\
+    dnf -y install texlive-latex-extra &&\
+    dnf -y install texlive-fonts-extra &&\
+    dnf -y install libfontconfig1-dev &&\
+    dnf -y install libxml2-dev &&\
+    dnf -y install libharfbuzz-dev &&\
+    dnf -y install libfribidi-dev &&\
+    dnf -y install libfreetype6-dev &&\
+    dnf -y install libpng-dev &&\
+    dnf -y install libjpeg-dev &&\
+    dnf -y install libtiff5-dev &&\
+    dnf -y install libcurl4-openssl-dev &&\
+    dnf -y install tzdata &&\
+    dnf -y install libcairo2-dev &&\
+    dnf -y install libxt-dev
+    
+# Install 'recent' cmake (from source)
+# ==============================================================
+# https://orcacore.com/install-use-cmake-almalinux-8
+RUN wget https://cmake.org/files/v3.20/cmake-3.20.6.tar.gz &&\
+    tar -zxvf cmake-3.20.6.tar.gz &&\
+    cd cmake-3.20.6 &&\
+    ./bootstrap &&\
+    gmake &&\
+    make install
+
+
