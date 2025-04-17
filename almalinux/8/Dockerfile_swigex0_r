@@ -21,7 +21,8 @@ RUN dnf -y install wget
 RUN wget https://pierre.guillou.net/data/swig.tar.gz &&\
     tar zxvf swig.tar.gz &&\
     CURDIR=$(pwd) &&\
-    echo 'export PATH=$CURDIR/swig/bin:$PATH' >> ~/.bashrc 
+    echo $CURDIR &&\
+    echo 'export PATH=$CURDIR/swig-ors/bin:$PATH' >> ~/.bashrc 
 
 RUN cat ~/.bashrc
 
