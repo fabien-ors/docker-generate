@@ -1,82 +1,62 @@
 FROM almalinux:8
 
-RUN dnf -y update
+# UPDATE repo
+RUN dnf -y update && dnf -y install epel-release && dnf clean all
 
-# Install compulsory tools
-# ==============================================================
-#RUN dnf -y install epel-release &&\
-#    dnf -y install gcc-c++ &&\
-#    dnf -y install automake &&\
-#    dnf -y install kernel-devel &&\
-#    dnf -y install openssl-devel &&\
-#    dnf -y install wget &&\
-#    dnf -y install make
+# INSTALL dependencies
+RUN dnf -y install \
+    sudo wget make gcc-c++ gettext unzip \
+    zlib-devel libffi-devel sqlite-devel openssl-devel \
+    gcc-gfortran bzip2-devel xz-devel \
+    fontconfig-devel libxml2-devel \
+    harfbuzz-devel fribidi-devel freetype-devel libpng-devel \
+    libjpeg-turbo-devel libtiff-devel libcurl-devel tzdata \
+    cairo-devel libXt-devel \
+    bison pcre2-devel \
+    git cmake gzip xz which
 
-# Install dev libs & tools (for R)
-# ==============================================================
-RUN dnf -y install gfortran &&\
-    dnf -y install libbz2-devel &&\
-    dnf -y install liblzma-dev &&\
-    dnf -y install libpcre++-devel &&\
-    dnf -y install texlive-latex-extra &&\
-    dnf -y install texlive-fonts-extra &&\
-    dnf -y install libfontconfig1-dev &&\
-    dnf -y install libxml2-devel &&\
-    dnf -y install libharfbuzz-devel &&\
-    dnf -y install libfribidi-devel &&\
-    dnf -y install libfreetype6-devel &&\
-    dnf -y install libpng-devel &&\
-    dnf -y install libjpeg-devel &&\
-    dnf -y install libtiff5-devel &&\
-    dnf -y install libcurl4-openssl-devel &&\
-    dnf -y install tzdata &&\
-    dnf -y install libcairo2-devel &&\
-    dnf -y install libxt-devel
+# INSTALL pandoc
+RUN wget https://github.com/jgm/pandoc/releases/download/3.1.11/pandoc-3.1.11-linux-amd64.tar.gz && \
+    tar -xvf pandoc-3.1.11-linux-amd64.tar.gz && \
+    cp -r pandoc-3.1.11/bin/* /usr/local/bin/ && \
+    rm -rf pandoc-3.1.11*
 
-# Install dev libs & tools (for git)
-# ==============================================================
-RUN dnf -y install zlib-devel &&\
-    dnf -y install libexpat1-dev
+# INSTALL full TeX Live from official installer (approx. 2GB installed)
+RUN dnf -y install perl wget tar && \
+    wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
+    tar -xvzf install-tl-unx.tar.gz && \
+    rm install-tl-unx.tar.gz && \
+    cd install-tl-* && \
+    echo "selected_scheme scheme-full" > texlive.profile && \
+    ./install-tl -profile texlive.profile && \
+    ln -s /usr/local/texlive/2024/bin/x86_64-linux/* /usr/local/bin/ && \
+    cd .. && \
+    rm -rf install-tl-*
 
-# Install dev libs & tools (for swigex)
-# ==============================================================
-RUN dnf -y install doxygen
+# INSTALL Doxygen
+RUN wget https://www.doxygen.nl/files/doxygen-1.9.8.linux.bin.tar.gz && \
+    tar -xvzf doxygen-1.9.8.linux.bin.tar.gz && \
+    cp doxygen-1.9.8/bin/doxygen /usr/local/bin/ && \
+    rm -rf doxygen-1.9.8*
 
-# Install 'recent' cmake (from source)
-# ==============================================================
-# https://orcacore.com/install-use-cmake-almalinux-8
-RUN wget https://cmake.org/files/v3.20/cmake-3.20.6.tar.gz &&\
-    tar -zxvf cmake-3.20.6.tar.gz &&\
-    cd cmake-3.20.6 &&\
-    ./bootstrap &&\
-    gmake &&\
-    make install
+# INSTALL recent R
+RUN wget https://cran.r-project.org/src/base/R-4/R-4.5.0.tar.gz && \
+    tar -xvf R-4.5.0.tar.gz && \
+    cd R-4.5.0 && \
+    ./configure --with-readline=no --without-x --with-cairo --with-pcre1 --enable-R-shlib && \
+    make && \
+    make install && \
+    Rscript -e "install.packages (c('knitr', 'rmarkdown', 'roxygen2'), repos='https://cloud.r-project.org/', dependencies = TRUE)" && \
+    cd .. && \
+    rm -rf R-4.5.0*
 
-# Install recent git (from source)
-# ==============================================================
-RUN wget https://github.com/git/git/archive/refs/tags/v2.34.1.tar.gz &&\
-    tar -zxf v2.34.1.tar.gz &&\
-    cd git-2.34.1 &&\
-    make prefix=/usr/local all &&\
-    make prefix=/usr/local install
-
-# Install non-official pre-build swig
-# ==============================================================
-RUN wget https://pierre.guillou.net/data/swig.tar.gz &&\
-    tar zxvf swig.tar.gz &&\
-    chmod +x swig-ors/bin/swig
-
-# Install last version of R (from source)
-# ==============================================================
-RUN wget https://cran.r-project.org/src/base/R-4/R-4.5.0.tar.gz &&\
-    tar -xvf R-4.5.0.tar.gz &&\
-    cd R-4.5.0 &&\
-    ./configure --with-readline=no --without-x --with-cairo --with-pcre1 --enable-R-shlib &&\
-    make &&\
-    make install &&\
-    Rscript -e "install.packages (c('knitr', 'rmarkdown'), repos='https://cloud.r-project.org/', dependencies = TRUE)" &&\
-    Rscript -e "install.packages(c('roxygen2'), repos='https://cloud.r-project.org/', dependencies = TRUE)"
-
-#RUN export PATH=/swig-ors/bin:$PATH &&\
-#    swig --version
+# INSTALL SWIG
+RUN git clone https://github.com/fabien-ors/swig && \
+    cd swig && \
+    cmake -Bbuild && \
+    cd build && \
+    make && \
+    make install && \
+    cd ../.. && \
+    rm -rf swig
 
