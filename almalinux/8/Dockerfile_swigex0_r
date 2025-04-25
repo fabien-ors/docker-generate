@@ -24,7 +24,17 @@ RUN dnf -y install m4 wget tar && \
     make install && \
     cd .. && \
     rm -rf bison-3.8.2*
-    
+
+# INSTALL Doxygen
+RUN git clone --branch Release_1_9_8 https://github.com/doxygen/doxygen.git && \
+    cd doxygen && \
+    mkdir build && cd build && \
+    cmake -G "Unix Makefiles" .. && \
+    make && \
+    make install && \
+    cd ../.. && \
+    rm -rf doxygen
+
 # INSTALL pandoc
 RUN wget https://github.com/jgm/pandoc/releases/download/3.1.11/pandoc-3.1.11-linux-amd64.tar.gz && \
     tar -xvf pandoc-3.1.11-linux-amd64.tar.gz && \
@@ -42,12 +52,6 @@ RUN dnf -y install perl wget tar && \
     ln -s /usr/local/texlive/2024/bin/x86_64-linux/* /usr/local/bin/ && \
     cd .. && \
     rm -rf install-tl-*
-
-# INSTALL Doxygen
-RUN wget https://www.doxygen.nl/files/doxygen-1.9.8.linux.bin.tar.gz && \
-    tar -xvzf doxygen-1.9.8.linux.bin.tar.gz && \
-    cp doxygen-1.9.8/bin/doxygen /usr/local/bin/ && \
-    rm -rf doxygen-1.9.8*
 
 # INSTALL recent R
 RUN wget https://cran.r-project.org/src/base/R-4/R-4.5.0.tar.gz && \
