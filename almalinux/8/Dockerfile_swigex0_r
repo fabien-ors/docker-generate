@@ -12,6 +12,7 @@ RUN dnf -y install \
     harfbuzz-devel fribidi-devel freetype-devel libpng-devel \
     libjpeg-turbo-devel libtiff-devel libcurl-devel tzdata \
     cairo-devel libXt-devel pcre2-devel \
+    python3 graphviz flex \
     git cmake gzip xz which
     
 # INSTALL recent bison
