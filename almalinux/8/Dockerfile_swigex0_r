@@ -5,7 +5,7 @@ RUN dnf -y update && dnf -y install epel-release && dnf clean all
 
 # INSTALL dependencies
 RUN dnf -y install \
-    sudo wget diffutils texinfo make gcc-c++ gettext unzip \
+    sudo wget diffutils make gcc-c++ gettext unzip \
     zlib-devel libffi-devel sqlite-devel openssl-devel \
     gcc-gfortran bzip2-devel xz-devel \
     fontconfig-devel libxml2-devel \
@@ -20,7 +20,7 @@ RUN dnf -y install m4 wget tar && \
     wget http://ftp.gnu.org/gnu/bison/bison-3.8.2.tar.gz && \
     tar -xvzf bison-3.8.2.tar.gz && \
     cd bison-3.8.2 && \
-    ./configure --prefix=/usr/local && \
+    ./configure --prefix=/usr/local --without-makeinfo && \
     make -j$(nproc) && \
     make install && \
     cd .. && \
