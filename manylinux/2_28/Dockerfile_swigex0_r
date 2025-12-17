@@ -48,7 +48,7 @@ RUN dnf -y install perl wget tar && \
     tar -xvzf install-tl-unx.tar.gz && \
     rm install-tl-unx.tar.gz && \
     cd install-tl-* && \
-    echo "selected_scheme scheme-full" > texlive.profile && \
+    echo "selected_scheme scheme-small" > texlive.profile && \
     ./install-tl -profile texlive.profile && \
     ln -s /usr/local/texlive/2024/bin/x86_64-linux/* /usr/local/bin/ && \
     cd .. && \
