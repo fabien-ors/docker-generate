@@ -12,7 +12,7 @@ RUN dnf -y install \
     harfbuzz-devel fribidi-devel freetype-devel libpng-devel \
     libjpeg-turbo-devel libtiff-devel libcurl-devel tzdata \
     cairo-devel libXt-devel \
-    python3 graphviz flex \
+    python3 flex \
     git cmake gzip xz which
     
 # INSTALL recent pcre2
@@ -46,24 +46,6 @@ RUN git clone --branch Release_1_9_8 https://github.com/doxygen/doxygen.git && \
     make install && \
     cd ../.. && \
     rm -rf doxygen
-
-# INSTALL pandoc
-RUN wget https://github.com/jgm/pandoc/releases/download/3.1.11/pandoc-3.1.11-linux-amd64.tar.gz && \
-    tar -xvf pandoc-3.1.11-linux-amd64.tar.gz && \
-    cp -r pandoc-3.1.11/bin/* /usr/local/bin/ && \
-    rm -rf pandoc-3.1.11*
-
-# INSTALL full TeX Live from official installer (approx. 2GB installed)
-RUN dnf -y install perl wget tar && \
-    wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
-    tar -xvzf install-tl-unx.tar.gz && \
-    rm install-tl-unx.tar.gz && \
-    cd install-tl-* && \
-    echo "selected_scheme scheme-full" > texlive.profile && \
-    ./install-tl -profile texlive.profile && \
-    ln -s /usr/local/texlive/2024/bin/x86_64-linux/* /usr/local/bin/ && \
-    cd .. && \
-    rm -rf install-tl-*
 
 # INSTALL recent R
 RUN wget https://cran.r-project.org/src/base/R-4/R-4.6.0.tar.gz && \
